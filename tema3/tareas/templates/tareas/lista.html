@@ -1,0 +1,9 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>{{ titulo }}</title></head><body><h1>{{ titulo }}</h1>{% if objetos %}<ul>{% for objeto in objetos %}<li>
+{% if tipo == "proyectos" %}<b>{{ objeto.nombre }}</b> — {{ objeto.descripcion }} | duración: {{ objeto.duracion_estimada }} | inicio: {{ objeto.fecha_inicio }} | fin: {{ objeto.fecha_finalizacion }} | creador: {{ objeto.creador.nombre }} | colaboradores: {% for u in objeto.usuarios_asignados.all %}{{ u.nombre }}{% if not forloop.last %}, {% endif %}{% empty %}ninguno{% endfor %}
+{% elif tipo == "tareas" %}<b>{{ objeto.titulo }}</b> — {{ objeto.descripcion }} | prioridad: {{ objeto.prioridad }} | estado: {{ objeto.estado }} | creada: {{ objeto.fecha_creacion }} | vence: {{ objeto.hora_vencimiento }} | proyecto: {{ objeto.proyecto.nombre }} | creador: {{ objeto.creador.nombre }}
+{% elif tipo == "asignaciones" %}{{ objeto.usuario.nombre }} — asignado el {{ objeto.fecha_asignacion }}. Observaciones: {{ objeto.observaciones }}
+{% elif tipo == "asignaciones_texto" %}{{ objeto.tarea.titulo }} — {{ objeto.usuario.nombre }} — {{ objeto.observaciones }}
+{% elif tipo == "comentarios" %}{{ objeto.fecha_comentario }} — {{ objeto.autor.nombre }}: {{ objeto.contenido }}
+{% elif tipo == "etiquetas" %}{{ objeto.nombre }}
+{% elif tipo == "usuarios" %}{{ objeto.nombre }} — {{ objeto.correo_electronico }}
+{% endif %}</li>{% endfor %}</ul>{% else %}<p>No hay resultados para esta consulta.</p>{% endif %}<p><a href="/">Volver al inicio</a></p></body></html>
